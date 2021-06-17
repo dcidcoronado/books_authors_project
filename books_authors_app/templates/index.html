@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Books{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-6">
+            <h3>Add a Book</h3>
+            <form method="POST" action="books">
+                {% csrf_token %}
+                <label for="title">
+                    Title<input type="text" name="title" id="title">
+                </label>
+                <label for="description">
+                    Description<textarea name="description" id="description"></textarea>
+                </label>
+                <button type="submit" class="btn btn-outline-success">Add</button>
+            </form>
+        </div>
+        <div class="col-6">
+            <h4>Books</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <th>
+                            {{book.id}}
+                        </th>
+                        <td>
+                            {{book.title}}
+                        </td>
+                        <td>
+                            <a href="books/{{book.id}}">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
