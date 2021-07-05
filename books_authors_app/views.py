@@ -32,7 +32,7 @@ def view_book(request, book_id):
             'all_authors': all_authors
         }
         return render(request, 'view_book.html', context)
-    if request.method == 'POST':
+    elif request.method == 'POST':
         new_author = Author.objects.get(id=request.POST['new_authors'])
         book.authors.add(new_author)
         return redirect(f'/books/{book_id}')
@@ -44,6 +44,24 @@ def authors(request):
         'authors': authors
     }
     return render(request, 'authors.html', context)
+
+
+def view_author(request, author_id):
+    author = Author.objects.get(id=author_id)
+    if request.method == 'GET':
+        books = author.books.all()
+        all_books = Book.objects.all()
+        context = {
+            'author': author,
+            'books': books,
+            'all_books': all_books
+        }
+        return render(request, 'view_author.html', context)
+    elif request.method == 'POST':
+        print(request.POST['new_books'])
+        new_book = Book.objects.get(id=request.POST['new_books'])
+        author.books.add(new_book)
+        return redirect(f'/authors/{author_id}')
 
 
 def new_author(request):
